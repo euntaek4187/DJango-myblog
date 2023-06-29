@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>Blog</title>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=d8158sitnq"></script>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/home.css' %}?after">
+        
+    </head>
+    <body class="all">
+        <header>
+            <h1>euntaek's blog</h1>
+            
+            <img width="600px" src="{% static 'image/croco.png' %}">
+        </header>
+        <div class="center">
+            <div class="blockShell" id="shell-1">
+                <main>
+                    <div class="newPostBTN">
+                    <a href="{% url 'new' %}" class="new-post">새 글 쓰기</a>
+                    </div>
+                    <div class="blog-posts">
+                        {% for blog in blogs %}
+                        <div class="blog-post">
+                            <h2>{{ blog.title }}</h2>
+                            <div class="closeUp">
+                            <a href="{% url 'detail' blog.id %}">게시글 보기</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </main>
+            </div>
+            <aside>
+                <div class="blockShell" id="shell-2">
+                    <div id="mapBox">
+                        <h2 id="mapText" class="mapTextBox">
+                            <a href="https://map.naver.com/v5/" class="mapText">네이버 지도</a>
+                        </h2>
+                        <div id="map"></div>
+                        <script>
+                            var mapOptions = {
+                                center: new naver.maps.LatLng(37.3595704, 127.105399),
+                                zoom: 10
+                            };
+
+                            var map = new naver.maps.Map('map', mapOptions);
+                        </script>
+                    </div>
+                </div>
+                <div class="blockShell" id="shell-3">
+                    <div id="mapBox2">
+                        <h2 id="mapText" class="mapTextBox">
+                            <a href="https://map.naver.com/v5/" class="mapText">오늘의 날씨</a>
+                        </h2>
+                        <h2>Current weather in Seoul: {{ weather.main.temp }}°C</h2>
+                        <p>Temperature: {{ weather.temperature }}</p>
+                        <p>Description: {{ weather.description }}</p>
+                        <p>Humidity: {{ weather.humidity }}</p>
+                        <p>Pressure: {{ weather.pressure }}</p>
+                        <p>Wind Speed: {{ weather.wind_speed }}</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </body>
+</html>
